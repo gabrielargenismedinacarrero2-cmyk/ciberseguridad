@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Control 5.16 — Gestión de Identidad | ISO/IEC 27002:2022</title>
+  <meta name="description" content="Presentación de estudiante sobre el Control 5.16 (Gestión de Identidad) del Anexo A: ISO/IEC 27001/27002:2022, con respuestas a las preguntas del profesor, ejemplo aplicado y material de apoyo." />
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#111a2b;
+      --muted:#93a4bf;
+      --accent:#4ade80;
+      --accent-2:#60a5fa;
+      --text:#e6eefc;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+      color:var(--text); background: radial-gradient(1200px 700px at 20% -10%, #1f2a44 0, transparent 60%),
+                          radial-gradient(1200px 700px at 120% 10%, #0f172a 0, transparent 60%),
+                          var(--bg);
+      line-height:1.6;
+    }
+    header{
+      padding:28px 22px 8px; max-width:1100px; margin:0 auto;
+    }
+    .title{
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      flex-wrap:wrap; border:1px solid rgba(255,255,255,.08); padding:22px; border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+    }
+    h1{margin:0; font-size: clamp(1.4rem, 2.4vw + .6rem, 2.2rem); letter-spacing:.2px}
+    .badge{display:inline-block; padding:.25rem .6rem; border-radius:999px; font-size:.8rem; background:#0b3b2a; color:#b3ffd7; border:1px solid #1e5b46}
+    .meta{font-size:.9rem; color:var(--muted)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap}
+    button, .btn{
+      appearance:none; border:none; cursor:pointer; color:#0b1220; background:var(--accent);
+      padding:10px 14px; border-radius:12px; font-weight:600; box-shadow: var(--shadow); transition:.2s transform ease;
+    }
+    button:hover, .btn:hover{transform: translateY(-2px)}
+    .ghost{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.15)}
+
+    nav{
+      max-width:1100px; margin:14px auto 6px; padding:0 22px 12px; color:var(--muted)
+    }
+    nav a{color:var(--muted); text-decoration:none; margin-right:14px; font-size:.95rem}
+    nav a:hover{color:#fff}
+
+    main{max-width:1100px; margin:0 auto; padding:10px 22px 60px; display:grid; grid-template-columns:1fr; gap:18px}
+
+    section{
+      background: rgba(10,15,25,.6); border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius); padding:20px 18px; box-shadow: var(--shadow);
+    }
+    h2{margin:.2rem 0 0.6rem; font-size:clamp(1.1rem, 1.4vw + .7rem, 1.6rem)}
+    h3{margin:.8rem 0 .4rem; font-size:1.05rem; color:#dbeafe}
+    p{margin:.3rem 0 .6rem}
+    ul{margin:.2rem 0 .8rem 1.2rem}
+    li{margin:.2rem 0}
+
+    .qgrid{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:14px}
+    .card{background: rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px}
+
+    .steps{counter-reset: step}
+    .steps li{position:relative; list-style:none; margin:12px 0; padding-left:44px}
+    .steps li::before{counter-increment: step; content: counter(step);
+      position:absolute; left:0; top:0; width:30px; height:30px; display:grid; place-items:center;
+      border-radius:50%; background:var(--accent-2); color:#06101f; font-weight:700}
+
+    .pill{display:inline-block; padding:.15rem .5rem; border-radius:999px; font-size:.8rem; border:1px solid rgba(255,255,255,.18); color:#d4e0f8}
+
+    .foot{font-size:.9rem; color:var(--muted)}
+
+    .two-col{columns: 2 320px; column-gap:16px}
+
+    footer{max-width:1100px; margin:0 auto 60px; padding:0 22px; color:var(--muted)}
+
+    .ok{color:#22c55e}
+
+    @media print{
+      body{background:#fff; color:#111}
+      section, .title{box-shadow:none; background:#fff; border:1px solid #ddd}
+      .actions, nav{display:none}
+      a{color:#111}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">
+      <div>
+        <h1>Control 5.16 — <strong>Gestión de Identidad</strong></h1>
+        <div class="meta">Norma de referencia: <span class="pill">ISO/IEC 27002:2022</span> · Dominio: <span class="pill">Controles de acceso / Protección</span></div>
+      </div>
+      <div style="text-align:right">
+        <div class="badge">Electiva Profesional II — Ciberseguridad</div><br/>
+        <div class="meta">Universidad Simón Bolívar — Sede Cúcuta</div>
+        <div class="meta">Estudiante: <span contenteditable="true">Gabriel Argenis Medina Carrero</span></div>
+      </div>
+      <div class="actions">
+        <button id="printBtn" title="Imprimir o guardar PDF">Imprimir / PDF</button>
+        <button class="ghost" id="darkToggle" title="Alternar contraste">Modo oscuro</button>
+        <a class="btn" href="#preguntas">Ir a: Preguntas del profesor</a>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#quees">¿Qué es?</a>
+    <a href="#proposito">Propósito</a>
+    <a href="#guia">Guía resumida</a>
+    <a href="#ciclo">Ciclo de vida</a>
+    <a href="#preguntas">Preguntas del profesor</a>
+    <a href="#ejemplo">Ejemplo sencillo</a>
+    <a href="#check">Checklist de evidencias</a>
+    <a href="#refs">Referencias</a>
+  </nav>
+
+  <main>
+    <section id="quees">
+      <h2>¿Qué es este control?</h2>
+      <p>El control <strong>5.16 Gestión de Identidad</strong> establece que la organización debe <strong>gestionar el ciclo de vida completo</strong> de las identidades de personas y sistemas que acceden a información y activos. Es un control <strong>preventivo</strong> que protege la <em>Confidencialidad, Integridad y Disponibilidad</em>.</p>
+      <div class="qgrid">
+        <div class="card"><h3>Tipo</h3><p>Preventivo</p></div>
+        <div class="card"><h3>Protege</h3><p>Confidencialidad · Integridad · Disponibilidad</p></div>
+        <div class="card"><h3>Dominio</h3><p>Controles de acceso (<em>Protección</em>)</p></div>
+        <div class="card"><h3>Capacidades</h3><p>Gestión de identidad y acceso (IAM)</p></div>
+      </div>
+    </section>
+
+    <section id="proposito">
+      <h2>Propósito</h2>
+      <p>Permitir la <strong>identificación única</strong> de personas/sistemas y la <strong>asignación adecuada de derechos de acceso</strong> a la información, desde la creación de la identidad hasta su revocación.</p>
+    </section>
+
+    <section id="guia">
+      <h2>Guía resumida (qué debe garantizar)</h2>
+      <div class="two-col">
+        <ul>
+          <li>Cada persona/sistema tiene una <strong>identidad única</strong>; no se comparten cuentas.</li>
+          <li>Las identidades asignadas a varias personas solo se permiten con <em>aprobación documentada</em> y casos específicos (p. ej., cuentas de servicio compartidas con controles).</li>
+          <li>Las identidades de <strong>servicios</strong> y <strong>no humanas</strong> se gestionan con políticas y responsables.</li>
+          <li>Identidades inactivas se <strong>eliminan o desactivan</strong> oportunamente.</li>
+          <li>Si una persona tiene varios roles, se gestiona con <strong>separación de funciones</strong> y trazabilidad.</li>
+          <li>Se registran los <strong>cambios significativos</strong> (alta, baja, modificaciones) y se auditan.</li>
+          <li>En altas/bajas realizadas por terceros (p. ej., RR. HH. tercerizado), se establecen <strong>controles y acuerdos</strong>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="ciclo">
+      <h2>Ciclo de vida de la identidad</h2>
+      <ol class="steps">
+        <li><strong>Confirmar requisitos</strong> (hay una razón válida para crear la identidad).</li>
+        <li><strong>Verificar identidad</strong> de la entidad (validación documental/biométrica).</li>
+        <li><strong>Establecer identidad</strong> (crear usuario único y perfil).</li>
+        <li><strong>Configurar y activar</strong> (servicios, autenticación, MFA, políticas).</li>
+        <li><strong>Otorgar / revisar / revocar accesos</strong> según autorizaciones vigentes.</li>
+      </ol>
+    </section>
+
+    <section id="preguntas">
+      <h2>Preguntas del profesor — respuestas</h2>
+      <div class="qgrid">
+        <div class="card">
+          <h3>1) Dominios del Anexo A</h3>
+          <p>El 5.16 pertenece al dominio <strong>Controles de acceso</strong> (categoría de <em>Protección</em>), que agrupa políticas y prácticas para gestionar <strong>identidades y permisos</strong>.</p>
+        </div>
+        <div class="card">
+          <h3>2) Descripción del control</h3>
+          <p><em>“Se debe gestionar el ciclo de vida completo de las identidades”.</em> En simple: crear, usar, cambiar y eliminar usuarios de forma controlada.</p>
+        </div>
+        <div class="card">
+          <h3>3) Controles relacionados con el objetivo</h3>
+          <ul>
+            <li>Identidad <strong>única</strong> por persona/sistema.</li>
+            <li><strong>No compartir</strong> cuentas; excepciones documentadas.</li>
+            <li>Gestión de <strong>cuentas de servicio</strong> y <strong>no humanas</strong>.</li>
+            <li><strong>Bajas oportunas</strong> y revisión periódica de accesos.</li>
+            <li>Registros y <strong>auditoría</strong> de cambios/actividades.</li>
+          </ul>
+        </div>
+        <div class="card" id="ejemplo">
+          <h3>4) Ejemplo de aplicación</h3>
+          <p><strong>Universidad (caso sencillo)</strong>:</p>
+          <ul>
+            <li>Al matricularse, el estudiante recibe <strong>correo y usuario</strong> únicos (SIGA/Moodle).</li>
+            <li>Acceso con <strong>MFA</strong> y políticas de contraseña.</li>
+            <li>Al graduarse o retirarse, la cuenta se <strong>desactiva</strong> y se revocan permisos.</li>
+            <li>Los profesores con rol adicional (coordinación) mantienen <strong>mismo usuario</strong>, pero con <strong>roles diferenciados</strong> y trazabilidad.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="check">
+      <h2>Checklist de evidencias (para una empresa o universidad)</h2>
+      <ul>
+        <li>Inventario de identidades (humanas y no humanas) y <em>propietario</em> de cada una.</li>
+        <li>Procedimiento de altas/cambios/bajas con <strong>tiempos máximos</strong>.</li>
+        <li>Uso de <strong>MFA</strong> y políticas de contraseñas.</li>
+        <li>Revisión periódica de <strong>accesos por rol</strong> (SoD, privilegio mínimo).</li>
+        <li>Bitácoras y reportes de <strong>auditoría</strong> de accesos.</li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>Referencias</h2>
+      <ul>
+        <li>ISO/IEC 27002:2022 — <em>Information security, cybersecurity and privacy protection — Information security controls</em>.</li>
+        <li>ISO/IEC 27001:2022 — <em>Information security, cybersecurity and privacy protection — ISMS requirements</em>. Anexo A (referencia de controles).</li>
+      </ul>
+      <p class="foot">Nota: Este documento es un <strong>resumen educativo</strong> para exposición. Para redacción formal o auditoría, consultar los textos oficiales.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Hecho por <span contenteditable="true">Gabriel Argenis Medina Carrero</span> — 8º semestre — Ingeniería de Sistemas — USB Cúcuta • <span class="ok">Listo para GitHub Pages</span></p>
+  </footer>
+
+  <script>
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+    const t = document.getElementById('darkToggle');
+    let dark = true;
+    t.addEventListener('click', ()=>{
+      dark = !dark;
+      if(dark){document.documentElement.style.setProperty('--bg','#0b1220'); document.body.style.color = 'var(--text)'; t.textContent='Modo oscuro';}
+      else{document.documentElement.style.setProperty('--bg','#fafafa'); document.body.style.color = '#0b1220'; t.textContent='Modo claro';}
+    });
+  </script>
+</body>
+</html>
